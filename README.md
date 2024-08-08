@@ -1,7 +1,7 @@
 Ahlstrom Chemical Calculator Instructions
 By Martina Veit Acosta
 
-1.	Introduction
+<b>1.	Introduction</b>
 As of right now, the Chemical Calculator can compute ordering amounts of Selvol and Blue Liquid for BLUPV1 and PV1 formulations. However, the same logic can be implemented for more chemicals. This would require a computer science/engineer to work along with a chemist in a bigger project. This tutorial is intended for employees with no programming background to be able to make changes to the code, for example, coat weight values and formulations amounts that can change over time. 
 
 2.	Installing VS code
