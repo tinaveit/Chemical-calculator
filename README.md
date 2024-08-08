@@ -17,5 +17,5 @@ The numbers on the left are line numbers. The text in green are comments, everyt
 
 <b>5.	Editing the Code:</b>
 To change the coat weight, formulations amount, etc. go to line 122. 
-Here you can see what we call “variables”, which are like containers for information. I assigned values to our variables, for example, coat_weight is 2.5. There are also comments next to each one of them explaining its purpose. Replace the variable values as needed, but don’t forget to add a “;” by the end!
+Here you can see what we call “variables”, which are like containers for information. I assigned values to our variables, for example, coat_weight is <confidential>. There are also comments next to each one of them explaining its purpose. Replace the variable values as needed, but don’t forget to add a “;” by the end!
 To test if your changes were effective, open the website and refresh the page. Then, type down your values and see if it is displaying them correctly.
