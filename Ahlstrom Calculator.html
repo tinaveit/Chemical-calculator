@@ -1,0 +1,174 @@
+<!--This is an HTML code for calculating Selvol and Blue Liquid Quantities, by Martina Veit Acosta (Summer 2024 Intern) -->
+<!--Feel free to email me with questions (mveitacosta@gmail.com) -->
+<!-- The comments throughout the code are intended to help people with no coding experience to update the website as needed. -->
+
+<!--1. This portion is for styling of the website, DO NOT CHANGE-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahlstrom's Chemical Calculator</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            margin: 20px;
+            font-size: 20px;
+        }
+        h1 {
+            font-size: 25px;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+        p {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 20px;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #8645a0;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #8645a0;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .result-heading {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #8645a0;
+        }
+        .result-details {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<!--2. This portion is for the instructions displayed in the website. If needed, change only the content of the written parts.-->
+<body>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Ahlstrom_logo_PRIMARY_RGB.jpg/320px-Ahlstrom_logo_PRIMARY_RGB.jpg" alt="Company Logo">
+    <h1>Welcome to Ahlstrom-Rhinelander Chemical Calculator!</h1>
+    <p><b>Brief Description: </b> <br>
+        <br>This is a tool to support the calculation of chemical quantities, specifically BLUPV1 and PV1 formulations. The goal is to optimize the ordering process of chemicals.<br>
+        How much selvol and how much blue liquid should we order are common inquiries due to Selvol's 24% Active Solids Content.<br>
+        <br><b> Instructions: </b> 
+        <ul>
+            <li> Please enter <b>"selvol"</b> or <b>"blue"</b> under chemical name. </li>
+            <li> Under WO Qty, add the <b>WO Qty</b> from JDE in lbs.</li>
+            <li>Please don't include commas in your numbers.</li>
+            <li>If we don't have any of that chemical in house, type "0" for the third prompt.</li>
+            <li>If you need to restart, simply refresh the page.</li>
+          </ul></p>
+
+<!--3. This portion is for the user input options. Feel free to change the input names (label line), but not the input type.-->
+    <form id="chemicalCalculator">
+        <label for="chemical_name">Chemical Name:</label>
+        <input type="text" id="chemical_name" name="chemical_name" required>
+
+        <label for="work_order_qty">WO Qty (lbs): </label>
+        <input type="text" id="work_order_qty" name="work_order_qty" required>
+
+        <label for="lbs_currently_have">How many pounds do we already have? </label>
+        <input type="text" id="lbs_currently_have" name="lbs_currently_have" required>
+
+        <button type="submit">Calculate</button>
+    </form>
+    <div id="result"></div>
+
+<!--4. This is the LOGIC portion of the code. Come here to make changes as needed.-->
+    <script>
+
+         // This part takes the values that the user wrote down and "saves them into memory"
+        document.getElementById('chemicalCalculator').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // saves input chemical name as "chemical_name"
+            var chemical_name = document.getElementById('chemical_name').value;
+
+            // saves work order quantity in pounds as work_order_qty
+            var work_order_qty = parseFloat(document.getElementById('work_order_qty').value);
+
+            // saves the amount of pounds the the company already has in house from the user input as "lbs_currently_have"
+            var lbs_currently_have = parseFloat(document.getElementById('lbs_currently_have').value);
+
+            // COME HERE TO CHANGE CALCULATIONS!
+             var lbs_per_ream = 52;                                                     // This is the amount of pounds per ream for 52LB XKL BLUPV1-W11 58 grade
+             var coat_weight = 2.5;                                                     // This is BLUPV1 coat weight
+             var active_solids = 0.24;                                                  // This is the 24% active solids content of Selvol
+             var blue_lbs = 3.5;                                                        // This is the amount of Blue Liquid in lbs in a 400 lbs total BLUPV1 formulation
+             var selvol_lbs = 265;                                                      // This is the amount of selvol in lbs in a 400 lbs total BLUPV1 formulation
+
+            // SELVOL CALCULATION
+            var paper_amount = work_order_qty / lbs_per_ream;                           // Here I divide the work order quantity by 52 lbs/rm to get the amount of paper in reams
+            var wet_PV1 = coat_weight/active_solids;                                    // Here I divide the coat weight by the active solids percentage to get the amount of wet PV1 needed
+            var selvol_amount = (paper_amount * wet_PV1) - lbs_currently_have;          // Here I multiply the paper amount we need in reams by the amount of wet PV1, and subtract the amount we already have in house to get the total amount of Selvol
+
+            // BLUE CALCULATION
+            var blue_ratio = blue_lbs/selvol_lbs;                                       // Here I divide blue liquid quantity by selvol quantity to get a ratio
+            var blue_amount =  (blue_ratio * selvol_amount) - lbs_currently_have;       // Next, I multiply by the selvol amount and subtract the amount of pounds we currently have
+
+            // Check to see if the user wrote down "selvol"
+            if (chemical_name.toLowerCase() === 'selvol') {
+
+                // Display the result
+                var resultElement = document.getElementById('result');
+                resultElement.innerHTML = '<div class="result-heading">Result</div>' +
+                                        '<div class="result-details">' +
+                                        '<p><strong>Chemical Name:</strong> ' + chemical_name + '</p>' +
+                                        '<p><strong>Exact Amount:</strong> ' + selvol_amount.toFixed(2) + ' lbs</p>' +
+                                        '<p><strong>Total Final Amount: </strong>' +(selvol_amount + (selvol_amount * 0.15)).toFixed(2) + ' lbs (includes 15% margin of error) </p>'
+                                        '</div>';}
+
+            // Check to see if the user wrote down "blue"
+            else if (chemical_name.toLowerCase() === 'blue') {  
+               //Display the result
+               var resultElement = document.getElementById('result');
+                resultElement.innerHTML = '<div class="result-heading">Result</div>' +
+                                        '<div class="result-details">' +
+                                        '<p><strong>Chemical Name:</strong> ' + chemical_name + '</p>' +
+                                        '<p><strong>Exact Amount:</strong> ' + blue_amount.toFixed(2) + ' lbs</p>' +
+                                        '<p><strong>Total Final Amount: </strong>' +(blue_amount + (blue_amount * 0.2)).toFixed(2) + ' lbs (includes 20% margin of error) </p>'
+                                        '</div>';}
+            
+            else {
+                // Display error message for invalid chemical name
+                var resultElement = document.getElementById('result');
+                resultElement.innerHTML = '<div class="error-message">Only Selvol or Blue options allowed. To retry, refresh the page.</div>';
+                return; // Exit function to prevent further execution
+            }
+
+            
+        });
+    </script>
+</body>
+</html>
+
+
