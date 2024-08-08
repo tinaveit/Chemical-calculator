@@ -1,4 +1,4 @@
-Ahlstrom Chemical Calculator Instructions
+<b>Ahlstrom Chemical Calculator Instructions</b>
 By Martina Veit Acosta
 
 <b>1.	Introduction:</b>
