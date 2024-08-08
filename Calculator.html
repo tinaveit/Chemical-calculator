@@ -120,14 +120,14 @@
             var lbs_currently_have = parseFloat(document.getElementById('lbs_currently_have').value);
 
             // COME HERE TO CHANGE CALCULATIONS!
-             var lbs_per_ream = 52;                                                     // This is the amount of pounds per ream for 52LB XKL BLUPV1-W11 58 grade
-             var coat_weight = 2.5;                                                     // This is BLUPV1 coat weight
-             var active_solids = 0.24;                                                  // This is the 24% active solids content of Selvol
-             var blue_lbs = 3.5;                                                        // This is the amount of Blue Liquid in lbs in a 400 lbs total BLUPV1 formulation
-             var selvol_lbs = 265;                                                      // This is the amount of selvol in lbs in a 400 lbs total BLUPV1 formulation
+             var lbs_per_ream = 60;                                                     // Fictitional
+             var coat_weight = 3;                                                       // fictitional
+             var active_solids = 0.24;                                                  // This is the 24% active solids content of fictitional
+             var blue_lbs = 4.5;                                                        // This is the fictitional amount of Blue Liquid in lbs in a 400 lbs total BLUPV1 formulation
+             var selvol_lbs = 165;                                                      // This is the fictitional amount of selvol in lbs in a 400 lbs total BLUPV1 formulation
 
             // SELVOL CALCULATION
-            var paper_amount = work_order_qty / lbs_per_ream;                           // Here I divide the work order quantity by 52 lbs/rm to get the amount of paper in reams
+            var paper_amount = work_order_qty / lbs_per_ream;                           // Here I divide the work order quantity to get the amount of paper in reams
             var wet_PV1 = coat_weight/active_solids;                                    // Here I divide the coat weight by the active solids percentage to get the amount of wet PV1 needed
             var selvol_amount = (paper_amount * wet_PV1) - lbs_currently_have;          // Here I multiply the paper amount we need in reams by the amount of wet PV1, and subtract the amount we already have in house to get the total amount of Selvol
 
